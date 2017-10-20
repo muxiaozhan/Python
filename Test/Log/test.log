@@ -1,0 +1,4 @@
+Fri,20 Oct 2017 13:11:14 log.py[line:13] INFO info message
+Fri,20 Oct 2017 13:11:14 log.py[line:14] WARNING warning message
+Fri,20 Oct 2017 13:11:14 log.py[line:15] ERROR error message
+Fri,20 Oct 2017 13:11:14 log.py[line:16] CRITICAL critical message
