@@ -19,7 +19,7 @@ driver.find_element_by_xpath('// *[ @ id = "sign"] / div[2] / div[2] / div').cli
 sleep(2)
 driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div/div[1]/input').send_keys("15705963365")
 sleep(2)
-driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div/div[2]/input').send_keys("123456")
+driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div/div[2]/input').send_keys("zhang12345")
 driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/button').click()
 location = (By.XPATH, "/html/body/div[2]")
 WebDriverWait(driver, 2, 0.5).until(EC.presence_of_element_located(location))

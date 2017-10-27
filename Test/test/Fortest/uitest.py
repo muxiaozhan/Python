@@ -76,20 +76,16 @@ class MyTest(unittest.TestCase):
             userflag = 1
         return userflag
 
-    def get_toast(self,xpathele):
-        location = (By.XPATH, xpathele)
-        WebDriverWait(self.driver, 2, 0.5).until(EC.presence_of_element_located(location))
-        alert = self.driver.find_element_by_xpath(xpathele)
-        msg = alert.get_attribute('textContent')
-        msg = msg.strip()
-        toastflag = '2'
-        print(msg + "    " + toastflag)
+    def get_toast(self, xpathele):
+
         try:
-            WebDriverWait(self.driver, 2, 0.5).until(EC.presence_of_element_located(By.XPATH, xpathele))
+            location = (By.XPATH, xpathele)
+            WebDriverWait(self.driver, 2, 0.5).until(EC.presence_of_element_located(location))
             alert = self.driver.find_element_by_xpath(xpathele)
             msg = alert.get_attribute('textContent')
             msg = msg.strip()
             toastflag = '2'
+            print(msg + "    " + toastflag)
         except:
             toastflag = '1'
         return toastflag
@@ -105,11 +101,12 @@ class MyTest(unittest.TestCase):
         self.is_login_sucess()
     '''
     def get_code(self):
-    '''
-    def forgetdriver.find_element_by_xpath('// *[ @ id = "sign"] / div[2] / div[2] / div').click()_pwd(self):
+    
+    def forget
+    driver.find_element_by_xpath('// *[ @ id = "sign"] / div[2] / div[2] / div').click()_pwd(self):
         self.
         phone = GetConfig("\Data\\UIConfig.conf", "gzwl_url_test", "phone")
-
+    '''
 
     def tearDown(self):
         self.driver.quit()
