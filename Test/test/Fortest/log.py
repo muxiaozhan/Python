@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 import logging
 import logging.config
-
+import os
+import configparser
+import pymysql
 '''
+
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                     datefmt='%a,%d %b %Y %H:%M:%S',
@@ -52,33 +55,53 @@ logger1.info('logger1 info message')
 logger1.warning('logger1 warning message')
 logger1.critical('logger1 critical message')
 '''
-import os
-#获取当前文件所在的文件夹的上级文件夹目录
-formdir = os.path.dirname(os.getcwd())
-
-class MyLog:
-
-    def __init__(self):
-        logging.config.fileConfig(formdir + "\Fortest\logging.conf")
-        self.logger = logging.getLogger("Example")
-
-    def debug(self,msg):
-        self.logger.debug(msg)
 
 
-if __name__=="__main__":
-    log = MyLog()
-    log.debug("测试输出日志")
-
-
+#获取配置文件信息
+def GetConfig(file, section, option):
+    # 获取当前文件所在的文件夹的上级文件夹目录
+    frontdir = os.path.dirname(os.getcwd())
+    conf = configparser.ConfigParser()
+    conf.read(frontdir + file)
+    return conf.get(section, option)
 '''
-logging.config.fileConfig("logging.conf")
-
-logger2 = logging.getLogger("Example")
-
-logger2.debug('logger2 debug message')
-logger2.info('logger2 info message')
-logger2.warning('logger2 warning message')
-logger2.critical('logger2 critical message')
-
+def ReadConfig(file, section, option):
+    conf = configparser.ConfigParser()
+    conf.read(file)
+    return conf.get(section, option)
 '''
+
+#记录日志
+def WriteLog(msg, level="debug",loggername = "Example"):
+    frontdir = os.path.dirname(os.getcwd())
+    #从指定的文件目录中读取logging配置文件
+    logging.config.fileConfig(frontdir + "\Data\ApiConfig.conf")
+    logger = logging.getLogger(loggername)
+    if level == "debug":
+        logger.debug(msg)
+    elif level == "info":
+        logger.info(msg)
+    elif level == "warning":
+        logger.warning(msg)
+    else:
+        logger.error("有错误，日志:" + msg)
+
+
+#链接数据库
+def ConnetDb(sql):
+    db_host = GetConfig("\Data\ApiConfig.conf", "gzwl_db_test", "db_host")
+    db_user = GetConfig("\Data\ApiConfig.conf", "gzwl_db_test", "db_user")
+    db_pwd = GetConfig("\Data\ApiConfig.conf", "gzwl_db_test", "db_pwd")
+    db = GetConfig("\Data\ApiConfig.conf", "gzwl_db_test", "db")
+    mysqldb = pymysql.connect(db_host, db_user, db_pwd, db, charset='utf8')
+    cursor = mysqldb.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
+if __name__ == "__main__":
+    sql = "SELECT id,user_name,phone from sys_user where is_delete='0' and phone='15705963365'"
+    print(ConnetDb(sql)[0][2])
+    WriteLog("ceshi")
+
